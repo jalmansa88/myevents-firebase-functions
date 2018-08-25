@@ -13,12 +13,12 @@ app.use(cors({ origin: '*' }));
 app.get('/token', async (req, res) => {
   const token = randexp('^[a-zA-Z0-9]{6}$');
 
-  const role = req.query.role;
+  const role = parseInt(req.query.role);
   const eventid = req.query.eventid;
 
   const tokenEntity = {
     eventId: eventid,
-    role: parseInt(role),
+    role: role,
     value: token,
     timestamp: Date.now() / 1000
   };
@@ -26,6 +26,8 @@ app.get('/token', async (req, res) => {
   console.log(tokenEntity);
 
   try {
+    console.log(role === 4);
+
     if (role === 4) {
       delete tokenEntity.eventId;
     } else {
